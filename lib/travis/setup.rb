@@ -107,7 +107,7 @@ module Travis
     def prepare_branch
       puts "preparing branch #{app} ..."
       `git symbolic-ref HEAD refs/heads/ci-tmp`  # switch to tmp branch
-      `rm .git/index`                            # clear branch ancestry
+      `rm -f .git/index`                         # clear branch ancestry
       index_files                                # add files to the index
       `git commit -qm 'update travis on #{app}'` # commit files
     end
@@ -119,7 +119,7 @@ module Travis
         'ci/Gemfile'    => 'Gemfile'
       }
       files.each do |source, target|
-        hash = `git hash-object #{source}`.strip
+        hash = `git hash-object -w #{source}`.strip
         `git update-index --add --cacheinfo 100644 #{hash} #{target}`
       end
     end
@@ -133,22 +133,5 @@ module Travis
       `git remote rm #{app}`                     # remove remote
       `git branch -D ci-tmp`                     # delete tmp branch
     end
-
-    # def set_config
-    #   `heroku config:add TRAVIS_NAME=#{name} TRAVIS_URL=#{repository} --app #{app}`
-    # end
-
-    # def prepare
-    #   dir = File.expand_path('..', __FILE__)
-    #   `cp #{dir}/#{type}.ru config.ru`
-    #   `cp #{dir}/Gemfile Gemfile`
-    #   `git add config.ru Gemfile`
-    #   `git commit -m 'ci #{type}'`
-    # end
-    #
-    # def push
-    #   puts "pushing to #{app} ..."
-    #   `git push #{app} ci:master --force`
-    # end
   end
 end

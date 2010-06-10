@@ -1,11 +1,7 @@
 source :rubygems
 
-# gems required to run travis
-gem 'sinatra'
-gem 'bob'
-gem 'data_mapper'
-gem 'data_objects'
-gem 'do_postgres'
+# required to run travis
+gem 'travis'
 
 # Travis will append your library's Gemfile here if it exists. You can also
 # list any gems manually here.
