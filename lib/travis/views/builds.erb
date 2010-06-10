@@ -1,0 +1,10 @@
+<ul id='builds'>
+  <% @builds.each do |build| %>
+    <li class='<%= build.status ? 'pass' : 'fail' %>'>
+      <%= build.created_at.strftime('%Y-%m-%d %H:%M:%S') %>
+      <a href='<%= 'url' %>/commit/<%= build.commit %>'><%= build.commit %></a>
+      on <%= build.runner %>
+      <pre><%= build.output %></pre>
+    </li>
+  <% end %>
+</ul>
