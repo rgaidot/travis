@@ -19,7 +19,7 @@ module Travis
 
       def payload
         payload = JSON.parse(Rack::Request.new(env).POST["payload"] || '')
-        payload.merge('command' => 'ruby test/backend/simple_test.rb')
+        payload.merge('command' => Config.command)
       end
   end
 end

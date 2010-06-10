@@ -1,2 +1,3 @@
-name: <%= name %>
-stacks: [<%= stacks.join(', ') %>]
+name:    <%= name %>
+stacks:  [<%= stacks.join(', ') %>]
+command: rake

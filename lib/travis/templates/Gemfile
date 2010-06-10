@@ -1,7 +1,7 @@
 source :rubygems
 
 # required to run travis
-gem 'travis'
+gem 'travis', '0.0.2.alpha2'
 
 # Travis will append your library's Gemfile here if it exists. You can also
 # list any gems manually here.

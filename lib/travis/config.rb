@@ -3,12 +3,19 @@ require 'yaml'
 module Travis
   module Config
     class << self
-      def name
-        config['name']
+      def config
+        @config ||= begin
+          file = File.exists?("#{Dir.pwd}/config.yml") ? 'config.yml' : 'ci/config.yml'
+          YAML.load_file("#{Dir.pwd}/#{file}")
+        end
       end
 
-      def config
-        @config ||= YAML.load_file(File.expand_path("#{Dir.pwd}/ci/config.yml"))
+      def config=(config)
+        @config = config
+      end
+
+      def name
+        config['name']
       end
 
       def method_missing(name, *args)

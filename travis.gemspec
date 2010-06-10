@@ -12,11 +12,15 @@ Gem::Specification.new do |s|
   s.summary      = "[summary]"
   s.description  = "[description]"
 
-  s.add_dependency 'sinatra'
-  s.add_dependency 'bob'
-  s.add_dependency 'data_mapper'
-  s.add_dependency 'data_objects'
-  s.add_dependency 'do_postgres'
+  s.add_dependency  'sinatra'
+  s.add_dependency  'bob'
+  s.add_dependency  'data_mapper' # no idea what we actually need here. dm is confusing
+  s.add_dependency  'dm-core'
+  s.add_dependency  'dm-migrations'
+  s.add_dependency  'dm-postgres-adapter'
+  s.add_dependency  'data_objects'
+  s.add_dependency  'do_postgres'
+  s.add_dependency  'pg'
 
   s.files        = Dir['{lib/**/*,[A-Z]*}']
   s.platform     = Gem::Platform::RUBY

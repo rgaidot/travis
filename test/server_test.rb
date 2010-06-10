@@ -11,8 +11,11 @@ class ServerTest < Test::Unit::TestCase
     'ref'        => 'refs/heads/master'
   }
 
-  def app
-    Travis::Server.new('i18n', 'http://github.com/svenfuchs/i18n')
+  attr_reader :app
+
+  def setup
+    Travis::Config.config = { 'name' => 'i18n', 'command' => 'rake' }
+    @app = Travis::Server.new('i18n', 'http://github.com/svenfuchs/i18n')
   end
 
   test 'can render' do

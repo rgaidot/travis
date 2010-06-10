@@ -10,12 +10,12 @@ class RunnerTest < Test::Unit::TestCase
     'commit'  => '25456ac13e5995b4a4f68dcf13d5ce95b1a687a7'
   }
 
+  attr_reader :app
+
   def setup
     Bob.logger = Logger.new("/tmp/bob.log")
-  end
-
-  def app
-    Travis::Runner.new
+    Travis::Config.config = { 'name' => 'i18n', 'command' => 'rake' }
+    @app = Travis::Runner.new
   end
 
   test 'can build' do

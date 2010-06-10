@@ -6,15 +6,14 @@ class SetupTest < Test::Unit::TestCase
 
   def setup
     @current_dir = Dir.pwd
-    @server = Travis::Setup.create('server', 'i18n')
-    @server.stubs(:create_app)
     setup_test_repository
+    @server = Travis::Setup.create('server')
+    @server.stubs(:create_app)
   end
 
   def teardown
     FileUtils.cd(@current_dir)
     `rm -rf tmp`
-    server.stubs(:push_app)
   end
 
   test 'prepare_branch' do
@@ -32,10 +31,10 @@ class SetupTest < Test::Unit::TestCase
     FileUtils.cd('tmp')
     `git init -q`
     system <<-sh
-      echo 'gemfile' > ci/Gemfile
-      echo 'config'  > ci/config.yml
-      echo 'server'  > ci/server.ru
-      echo 'runner'  > ci/runner.ru
+      echo 'gemfile'    > ci/Gemfile
+      echo 'name: i18n' > ci/config.yml
+      echo 'server'     > ci/server.ru
+      echo 'runner'     > ci/runner.ru
       git add ci/Gemfile ci/config.yml ci/runner.ru ci/server.ru
       git commit -qm 'scaffolded app files'
     sh

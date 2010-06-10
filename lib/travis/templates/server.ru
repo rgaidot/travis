@@ -4,6 +4,8 @@ $: << ::File.expand_path('../lib', __FILE__)
 require 'rubygems'
 require 'travis'
 require 'travis/build'
+require 'data_mapper'
+require 'dm-migrations'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///tmp/travis-development.db")
 DataMapper.auto_upgrade!
