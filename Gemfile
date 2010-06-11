@@ -9,3 +9,9 @@ gem 'dm-postgres-adapter'
 gem 'data_objects'
 gem 'do_postgres'
 gem 'pg'
+
+group :test do
+  gem 'dm-sqlite-adapter'
+  gem 'capture_stdout'
+  gem 'test_declarative'
+end

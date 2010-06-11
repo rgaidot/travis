@@ -9,6 +9,7 @@ class SetupTest < Test::Unit::TestCase
     setup_test_repository
     @server = Travis::Setup.create('server')
     @server.stubs(:create_app)
+    super
   end
 
   def teardown

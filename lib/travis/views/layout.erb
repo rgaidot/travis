@@ -1,11 +1,28 @@
 <html>
   <head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <style>
       body {
         font-family: Helvetica;
       }
+      p {
+        margin: 0;
+        padding: 4px;
+        margin-bottom: 4px;
+        border: 1px solid;
+      }
+      .pass p {
+        color: green;
+        background-color: #BBF8AA;
+        border-color: #99D688;
+      }
       .pass a {
         color: green;
+      }
+      .fail p {
+        color: red;
+        background-color: #FBA;
+        border-color: #D98;
       }
       .fail a {
         color: red;
@@ -16,13 +33,18 @@
         padding: 0;
       }
       pre {
-        background-color: #eee;
-        padding: 25px;
+        background-color: #f6f6f6;
+        padding: 15px;
       }
       .pass pre {
         display: none;
       }
     </style>
+    <script>
+      $(document).ready(function() {
+        $('li').click(function() { $('pre', this).toggle(); })
+      })
+    </script>
   </head>
   <body>
     <%= yield %>

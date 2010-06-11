@@ -1,3 +1,4 @@
 name:    <%= name %>
+url:     <%= url %>
 stacks:  [<%= stacks.join(', ') %>]
 command: rake

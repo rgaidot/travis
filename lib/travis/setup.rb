@@ -12,7 +12,7 @@ module Travis
       def name
         Config.name
       end
-
+      
       def stacks
         STACKS.keys
       end
@@ -41,7 +41,7 @@ module Travis
         target = "#{Dir.pwd}/ci/"
         `mkdir -p #{target}`
 
-        # TODO add the url
+        url = "http://github.com/[yourname]/#{name}" # TODO
         scaffold_template("#{source}/config.yml", "#{target}/config.yml", binding)
 
         %w(Gemfile runner.ru server.ru).each do |file|
@@ -86,7 +86,7 @@ module Travis
 
     def create_app
       puts "creating #{app} ..."
-      `heroku create #{app} --stack #{STACKS[stack]}`
+      `heroku create #{app} --stack #{STACKS[stack.to_s]}`
     end
 
     def remote_exists?

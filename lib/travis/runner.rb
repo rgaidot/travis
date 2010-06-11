@@ -3,23 +3,23 @@ require 'json'
 
 module Travis
   class Runner
-    attr_reader :env
+    include Github
 
     def call(env)
-      @env = env
-      status, output = Bob::Builder.new(payload).build
-      body = { :status => status, :output => output, :commit => payload['commit'] }.to_json
+      response = build(env).to_json
       # what's an appropriate http status to signal a test failure?
-      Rack::Response.new(body, status ? 200 : 400).finish
+      Rack::Response.new(response, response['status'] ? 200 : 400).finish
     rescue JSON::JSONError
       Rack::Response.new("Unparsable payload", 400).finish
     end
 
-    protected
+    def build(env)
+      payload = JSON.parse(Rack::Request.new(env).POST["payload"] || '')
+      payload = map_from_github(payload)
+      payload.merge!('command' => Config.command)
 
-      def payload
-        payload = JSON.parse(Rack::Request.new(env).POST["payload"] || '')
-        payload.merge('command' => Config.command)
-      end
+      status, output = Bob::Builder.new(payload).build
+      payload.merge('status' => status, 'output' => output)
+    end
   end
 end

@@ -1,13 +1,14 @@
 module Travis
-  autoload :Bob,    'travis/bob'
-  autoload :Build,  'travis/build'
-  autoload :Config, 'travis/config'
-  autoload :Tasks,  'travis/tasks'
-  autoload :Git,    'travis/git'
-  autoload :Github, 'travis/github'
-  autoload :Setup,  'travis/setup'
-  autoload :Runner, 'travis/runner'
-  autoload :Server, 'travis/server'
+  autoload :Bob,     'travis/bob'
+  autoload :Build,   'travis/build'
+  autoload :Config,  'travis/config'
+  autoload :Git,     'travis/git'
+  autoload :Github,  'travis/github'
+  autoload :Helpers, 'travis/helpers'
+  autoload :Runner,  'travis/runner'
+  autoload :Server,  'travis/server'
+  autoload :Setup,   'travis/setup'
+  autoload :Tasks,   'travis/tasks'
 
   class << self
     def scaffold(name)

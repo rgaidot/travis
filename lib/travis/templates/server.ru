@@ -10,7 +10,7 @@ require 'dm-migrations'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///tmp/travis-development.db")
 DataMapper.auto_upgrade!
 
-name = ENV['TRAVIS_NAME'] || raise('TRAVIS_NAME not set')
-url  = ENV['TRAVIS_URL']  || raise('TRAVIS_URL not set')
+# name = ENV['TRAVIS_NAME'] || raise('TRAVIS_NAME not set')
+# url  = ENV['TRAVIS_URL']  || raise('TRAVIS_URL not set')
 
-run Travis::Server.new(name, url)
+run Travis::Server.new # (name, url)

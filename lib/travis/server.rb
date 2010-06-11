@@ -4,13 +4,13 @@ require 'json'
 
 module Travis
   class Server < Sinatra::Application
-    include Github
-
+    include Helpers
+    
     attr_reader :name, :url
 
-    def initialize(name, url)
-      @name = name
-      @url  = url
+    def initialize # (name, url)
+      @name = Config.name
+      @url  = Config.url
       super()
     end
 
@@ -29,10 +29,9 @@ module Travis
     protected
 
       def build_all
-        payload = parse_github_payload(params[:payload])
         Setup.runners.each do |runner|
           # should probably spawn some process per runner here
-          Build.create_from_remote(runner.url, payload)
+          Build.create_from_remote(runner.url, params[:payload])
         end
       end
   end

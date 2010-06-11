@@ -1,9 +1,7 @@
+require 'uri'
+
 module Travis
   module Github
-    def parse_github_payload(payload)
-      map_from_github(JSON.parse(payload))
-    end
-
     # thanks, Bobette
     def map_from_github(payload)
       payload.delete('before')
@@ -16,7 +14,9 @@ module Travis
     end
 
     def git_uri(repository)
-      URI(repository['url']).tap { |u| u.scheme = 'git' }.to_s
+      uri = URI.parse(repository['url'])
+      uri.scheme = 'git'
+      uri.to_s
     end
   end
 end

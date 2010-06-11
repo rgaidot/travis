@@ -3,19 +3,12 @@ require File.expand_path('../test_helper', __FILE__)
 class ServerTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
-  GITHUB_PAYLOAD = {
-    'before'     => '533373f50625df607c9fed0092581b75abffb183',
-    'repository' => { 'url' => 'http://github.com/svenfuchs/i18n', 'name' => 'i18n' },
-    'commits'    => [{ 'id' => '25456ac13e5995b4a4f68dcf13d5ce95b1a687a7' }],
-    'after'      => '25456ac13e5995b4a4f68dcf13d5ce95b1a687a7',
-    'ref'        => 'refs/heads/master'
-  }
-
   attr_reader :app
 
   def setup
-    Travis::Config.config = { 'name' => 'i18n', 'command' => 'rake' }
-    @app = Travis::Server.new('i18n', 'http://github.com/svenfuchs/i18n')
+    Travis::Config.config = { 'name' => 'i18n', 'url' => 'http://github.com/svenfuchs/i18n', 'command' => 'rake' }
+    @app = Travis::Server.new #('i18n', 'http://github.com/svenfuchs/i18n')
+    super
   end
 
   test 'can render' do
@@ -31,17 +24,15 @@ class ServerTest < Test::Unit::TestCase
   end
 
   test 'can build' do
-    Travis::Build.expects(:create_from_remote).times(3).with do |url, payload|
-      expected_url = %r(http://ci-i18n-runner-[\d]{3}.heroku.com)
-      expected_payload = {
-        "scm"    =>"git",
-        "uri"    =>"git://github.com/svenfuchs/i18n",
-        "branch" =>"master",
-        "commit" =>"25456ac13e5995b4a4f68dcf13d5ce95b1a687a7"
-      }
-      expected_url =~ url && expected_payload == payload
-    end
-    post '/', :payload => GITHUB_PAYLOAD.to_json
+    Travis::Build.expects(:`).times(3).returns(RUNNER_RESULT.to_json)
+
+    post '/', :payload => GITHUB_PAYLOAD
     assert last_response.ok?
+
+    assert_equal %w(output output output), Travis::Build.all.map { |build| build.output }
+
+    build = Travis::Build.first
+    assert_equal '25456ac13e5995b4a4f68dcf13d5ce95b1a687a7', build.commit
+    assert_equal 'http://github.com/svenfuchs/i18n', build.url
   end
 end
