@@ -1,4 +1,5 @@
 require 'dm-core'
+require 'cgi'
 
 module Travis
   class Build
@@ -36,7 +37,10 @@ module Travis
     end
     
     def stack
-      @stack ||= Setup::STACKS[runner =~ /runner-(\d*)\./ && $1].gsub(/bamboo-|aspen-/, '')
+      @stack ||= begin
+        stack = Setup::STACKS[runner =~ /runner-(\d*)\./ && $1] || ''
+        stack.gsub(/bamboo-|aspen-/, '')
+      end
     end
   end
 end

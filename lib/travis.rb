@@ -16,15 +16,21 @@ module Travis
     end
 
     def install(options)
-      options.each { |option| send(:"install_#{option}") }
+      options.each { |option| send(:"#{option}_do", :install) }
     end
 
-    def install_server
-      Setup.create('server').install
+    def destroy(options)
+      options.each { |option| send(:"#{option}_do", :destroy) }
     end
+    
+    protected
 
-    def install_runners
-      Config.stacks.each { |stack| Setup.create('runner', stack).install }
-    end
+      def server_do(action)
+        Setup.create('server').send(action)
+      end
+
+      def runners_do(action)
+        Config.stacks.each { |stack| Setup.create('runner', stack).send(action) }
+      end
   end
 end

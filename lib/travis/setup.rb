@@ -71,6 +71,11 @@ module Travis
       end
       reset
     end
+      
+    def destroy
+      puts "destroying #{app} ..."
+      system("heroku destroy --app #{app}")
+    end
 
     def app
       "ci-#{name}" + (type == 'runner' ? "-#{type}-#{stack}" : '' )

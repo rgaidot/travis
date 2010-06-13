@@ -26,10 +26,10 @@ output
 class HelpersTest < Test::Unit::TestCase
   include Travis::Helpers
   
-  test 'build_output' do
-    build = Travis::Build.new(:output => OUTPUT, :command => 'rake')
-    puts OUTPUT
-    puts '-' * 49
-    puts build_output(build)
-  end
+  # test 'build_output' do
+  #   build = Travis::Build.new(:output => OUTPUT, :command => 'rake')
+  #   puts OUTPUT
+  #   puts '-' * 49
+  #   puts build_output(build)
+  # end
 end

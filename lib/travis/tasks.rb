@@ -12,7 +12,7 @@ module Travis
       Travis.scaffold(name)
     end
 
-    desc "install", "Install/update your Travis setup to heroku."
+    desc "install", "Install/update your Travis setup to Heroku."
     method_options :all     => :boolean,
                    :server  => :boolean,
                    :runners => :boolean
@@ -20,6 +20,16 @@ module Travis
       options = self.options.keys
       options = %w(server runners) if options.empty? || options.include?('all')
       Travis.install(options)
+    end
+
+    desc "destroy", "Destroy Travis setup on Heroku."
+    method_options :all     => :boolean,
+                   :server  => :boolean,
+                   :runners => :boolean
+    def destroy
+      options = self.options.keys
+      options = %w(server runners) if options.empty? || options.include?('all')
+      Travis.destroy(options)
     end
 
     protected

@@ -1,3 +1,3 @@
 module Travis
-  VERSION = '0.0.2.alpha11'
+  VERSION = '0.0.2.alpha12'
 end

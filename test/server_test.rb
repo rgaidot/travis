@@ -7,7 +7,7 @@ class ServerTest < Test::Unit::TestCase
 
   def setup
     Travis::Config.config = { 'name' => 'i18n', 'url' => 'http://github.com/svenfuchs/i18n', 'command' => 'rake' }
-    @app = Travis::Server.new #('i18n', 'http://github.com/svenfuchs/i18n')
+    @app = Travis::Server.new
     super
   end
 
